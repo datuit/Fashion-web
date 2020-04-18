@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource mysql {
+  provider = "mysql"
+  url      = "mysql://root:11111111@localhost:3306/node-api"
+}
+
+model sessions {
+  data       String?
+  expires    Int
+  session_id String  @id
+}
+
+model users {
+  avatarUrl   String?
+  create_time DateTime?
+  email       String    @unique
+  facebookId  String?   @unique
+  fullname    String
+  id          Int       @default(autoincrement()) @id
+  password    String?
+  username    String    @unique
+}
