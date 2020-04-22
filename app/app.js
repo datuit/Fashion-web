@@ -17,7 +17,6 @@ import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 
 import history from 'Utils/history';
-import 'sanitize.css/sanitize.css';
 
 // Import root app
 import App from 'Containers/App';
@@ -36,13 +35,15 @@ import configureStore from 'Redux/configureStore';
 // Import i18n messages
 import { translationMessages } from './i18n';
 
+import './bootstrap.min.css';
+
 // Create redux store with history
 const initialState = {};
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 
 const client = new ApolloClient({
-  uri: 'http://localhost:3000/graphql',
+  uri: '/graphql',
 });
 
 const render = messages => {

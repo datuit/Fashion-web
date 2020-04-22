@@ -31,15 +31,9 @@ module.exports = options => ({
         // Preprocess our own .css files
         // This is the place to add your own loaders (e.g. sass/less etc.)
         // for a list of loaders, see https://webpack.js.org/loaders/#styling
-        test: /\.css$/,
+        test: /\.(css||scss)$/,
         exclude: /node_modules/,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        // Preprocess 3rd party .css files located in node_modules
-        test: /\.css$/,
-        include: /node_modules/,
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.(eot|otf|ttf|woff|woff2)$/,
@@ -122,9 +116,10 @@ module.exports = options => ({
       Containers: path.resolve(__dirname, '../../app/containers/'),
       Images: path.resolve(__dirname, '../../app/images/'),
       Routes: path.resolve(__dirname, '../../app/routes/'),
-      Utils: path.resolve(__dirname, '../../app/utils'),
+      Utils: path.resolve(__dirname, '../../app/utils/'),
       Redux: path.resolve(__dirname, '../../app/redux/'),
       Translations: path.resolve(__dirname, '../../app/translations/'),
+      Theme: path.resolve(__dirname, '../../app/theme/'),
     },
     extensions: ['.js', '.jsx', '.react.js'],
     mainFields: ['browser', 'jsnext:main', 'main'],

@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "baseUrl": "./",
+    "paths": {
+      "Components/*": ["./app/components/*"],
+      "Containers/*": ["./app/containers/*"],
+      "Images/*": ["./app/images/*"],
+      "Routes/*": ["./app/routes/*"],
+      "Utils/*": ["./app/utils/*"],
+      "Redux/*": ["./app/redux/*"],
+      "Translations/*": ["./app/translations/*"],
+      "Theme/*": ["./app/theme/*"]
+    }
+  }
+}

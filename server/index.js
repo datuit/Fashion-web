@@ -5,6 +5,8 @@ const logger = require('./logger');
 const graphqlHTTP = require('express-graphql');
 const { buildSchema } = require('graphql');
 
+const passport = require('passport');
+
 const schema = buildSchema(`
   type Query {
     hello: String
@@ -30,7 +32,11 @@ const customHost = argv.host || process.env.HOST;
 const host = customHost || null; // Let http.Server use its default IPv6/4 host
 const prettyHost = customHost || 'localhost';
 
-const { connection, session } = require('./config');
+const {
+  connection,
+
+  // session
+} = require('./config/session');
 const apiRouter = require('./routes/api.route');
 
 class App {
@@ -38,9 +44,9 @@ class App {
     this.appExpress = express();
   }
 
-  async connectDB() {
+  connectDB() {
     // eslint-disable-next-line func-names
-    await connection.connect(err => {
+    connection.connect(err => {
       if (err) {
         return logger.error(`error connecting: ${err.stack}`);
       }
@@ -51,6 +57,13 @@ class App {
 
   applyMiddleware() {
     const { appExpress } = this;
+    appExpress.use(passport.initialize());
+    // eslint-disable-next-line global-require
+    // require('./config/passpost')(passport);
+    // appExpress.use(session);
+    appExpress.use(express.json());
+    appExpress.use(express.urlencoded({ extended: true }));
+    // appExpress.use(passport.initialize());
     // If you need a backend, e.g. an API, add your custom backend-specific middleware here
     // appExpress.use('/api', myApi);
     appExpress.use(
@@ -61,15 +74,8 @@ class App {
         graphiql: true,
       }),
     );
-    appExpress.use(session);
-    appExpress.use(express.json());
-    appExpress.use(express.urlencoded({ extended: true }));
 
     appExpress.use('/api', apiRouter);
-
-    appExpress.get('/as', (req, res) => {
-      res.send('hello-as');
-    });
 
     // In production we need to pass these values in instead of relying on webpack
     setup(this.appExpress, {
@@ -107,11 +113,7 @@ class App {
   }
 }
 
-(async () => {
-  const app = new App();
-
-  await app.connectDB();
-
-  app.applyMiddleware();
-  app.run();
-})();
+const app = new App();
+app.connectDB();
+app.applyMiddleware();
+app.run();

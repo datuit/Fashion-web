@@ -1,9 +1,9 @@
+/* eslint-disable no-console */
 const mysql = require('mysql');
-const session = require('express-session');
-const MysqlStore = require('express-mysql-session')(session);
-const { PrismaClient } = require('@prisma/client');
+const Session = require('express-session');
+const MysqlStore = require('express-mysql-session')(Session);
 
-module.exports.connection = mysql.createConnection({
+const connection = mysql.createConnection({
   host: process.env.HOST || 'localhost',
   port: process.env.PORT_DATABASE,
   user: process.env.USER_DATABASE,
@@ -11,7 +11,7 @@ module.exports.connection = mysql.createConnection({
   database: process.env.NAME_DATABASE,
 });
 
-module.exports.session = session({
+const session = Session({
   name: process.env.SESS_NAME || 'begginer',
   secret: process.env.SESS_SECRET || 'begginer_1',
   saveUninitialized: false,
@@ -29,7 +29,7 @@ module.exports.session = session({
         },
       },
     },
-    this.connection,
+    connection,
   ),
   cookie: {
     sameSite: true,
@@ -39,4 +39,7 @@ module.exports.session = session({
   },
 });
 
-module.exports.prisma = new PrismaClient();
+module.exports = {
+  session,
+  connection,
+};

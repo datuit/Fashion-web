@@ -2,9 +2,9 @@ generator client {
   provider = "prisma-client-js"
 }
 
-datasource mysql {
+datasource db {
   provider = "mysql"
-  url      = "mysql://root:11111111@localhost:3306/node-api"
+  url      = env("DATABASE_URL")
 }
 
 model sessions {
@@ -16,10 +16,10 @@ model sessions {
 model users {
   avatarUrl   String?
   create_time DateTime?
-  email       String    @unique
-  facebookId  String?   @unique
-  fullname    String
+  email       String?
+  facebookId  String?
+  fullname    String?
   id          Int       @default(autoincrement()) @id
-  password    String?
+  password    String
   username    String    @unique
 }
