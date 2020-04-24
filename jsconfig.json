@@ -10,7 +10,7 @@
       "Utils/*": ["./app/utils/*"],
       "Redux/*": ["./app/redux/*"],
       "Translations/*": ["./app/translations/*"],
-      "Theme/*": ["./app/theme/*"]
+      "Style/*": ["./app/style/*"]
     }
   }
 }

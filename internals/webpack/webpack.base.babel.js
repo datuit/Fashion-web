@@ -119,7 +119,7 @@ module.exports = options => ({
       Utils: path.resolve(__dirname, '../../app/utils/'),
       Redux: path.resolve(__dirname, '../../app/redux/'),
       Translations: path.resolve(__dirname, '../../app/translations/'),
-      Theme: path.resolve(__dirname, '../../app/theme/'),
+      Style: path.resolve(__dirname, '../../app/style/'),
     },
     extensions: ['.js', '.jsx', '.react.js'],
     mainFields: ['browser', 'jsnext:main', 'main'],

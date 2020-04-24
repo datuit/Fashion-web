@@ -32,11 +32,11 @@ const customHost = argv.host || process.env.HOST;
 const host = customHost || null; // Let http.Server use its default IPv6/4 host
 const prettyHost = customHost || 'localhost';
 
-const {
-  connection,
+// const {
+//   connection,
 
-  // session
-} = require('./config/session');
+//   // session
+// } = require('./config/session');
 const apiRouter = require('./routes/api.route');
 
 class App {
@@ -46,13 +46,13 @@ class App {
 
   connectDB() {
     // eslint-disable-next-line func-names
-    connection.connect(err => {
-      if (err) {
-        return logger.error(`error connecting: ${err.stack}`);
-      }
-      // eslint-disable-next-line no-console
-      console.log('connected mysqls');
-    });
+    // connection.connect(err => {
+    //   if (err) {
+    //     return logger.error(`error connecting: ${err.stack}`);
+    //   }
+    //   // eslint-disable-next-line no-console
+    //   console.log('connected mysqls');
+    // });
   }
 
   applyMiddleware() {
