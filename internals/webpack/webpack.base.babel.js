@@ -114,6 +114,7 @@ module.exports = options => ({
     alias: {
       Components: path.resolve(__dirname, '../../app/components/'),
       Containers: path.resolve(__dirname, '../../app/containers/'),
+      Constants: path.resolve(__dirname, '../../app/constants/'),
       Images: path.resolve(__dirname, '../../app/images/'),
       Routes: path.resolve(__dirname, '../../app/routes/'),
       Utils: path.resolve(__dirname, '../../app/utils/'),

@@ -8,7 +8,7 @@ import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
 import mainSaga from './sagas';
 
-export default function configureStore(initialState = {}, history) {
+export default function configureStore(initialState, history) {
   let composeEnhancers = compose;
   let reduxSagaMonitorOptions = {};
 

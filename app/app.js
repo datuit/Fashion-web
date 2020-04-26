@@ -12,11 +12,13 @@ import '@babel/polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 
 import history from 'Utils/history';
+import checkToken from 'Utils/checkToken';
 
 // Import root app
 import App from 'Containers/App';
@@ -36,8 +38,6 @@ import configureStore from 'Redux/configureStore';
 import { translationMessages } from './i18n';
 
 // Create redux store with history
-const initialState = {};
-const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 
 const client = new ApolloClient({
@@ -45,19 +45,28 @@ const client = new ApolloClient({
 });
 
 const render = messages => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <LanguageProvider messages={messages}>
-        <ConnectedRouter history={history}>
-          <ApolloProvider client={client}>
-            <App />
-          </ApolloProvider>
-        </ConnectedRouter>
-      </LanguageProvider>
-    </Provider>,
+  const renderMain = initialState => {
+    const store = configureStore(initialState, history);
 
-    MOUNT_NODE,
-  );
+    ReactDOM.render(
+      <Provider store={store}>
+        <LanguageProvider messages={messages}>
+          <ConnectedRouter history={history}>
+            <ApolloProvider client={client}>
+              <Router>
+                <Switch>
+                  <Route path="/" component={App} />
+                </Switch>
+              </Router>
+            </ApolloProvider>
+          </ConnectedRouter>
+        </LanguageProvider>
+      </Provider>,
+
+      MOUNT_NODE,
+    );
+  };
+  (async () => renderMain(await checkToken()))();
 };
 
 if (module.hot) {

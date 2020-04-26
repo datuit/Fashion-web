@@ -7,19 +7,74 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model sessions {
-  data       String?
-  expires    Int
-  session_id String  @id
+model category {
+  categoryId   Int           @default(autoincrement()) @id
+  categoryName String
+  subCategory  subCategory[]
+}
+
+model productImages {
+  imgProductId Int      @default(autoincrement()) @id
+  imgUrl       String
+  productId    Int
+  products     products @relation(fields: [productId], references: [productId])
+
+  @@index([productId], name: "productimg_fk_idx")
+}
+
+model products {
+  productCost       Float?
+  productDecription String?
+  productId         Int             @default(autoincrement()) @id
+  productName       String
+  productNote       String?
+  productPrice      Float
+  productSku        String?
+  subCateId         Int
+  subCategory       subCategory     @relation(fields: [subCateId], references: [subCateId])
+  productImages     productImages[]
+  productsize       productsize[]
+
+  @@index([subCateId], name: "subId_fk_idx")
+}
+
+model productsize {
+  productId       Int
+  productQuantity Int
+  productSize     String
+  productSizeId   Int      @default(autoincrement()) @id
+  products        products @relation(fields: [productId], references: [productId])
+
+  @@index([productId], name: "productID_fk_idx")
+}
+
+model subCategory {
+  categoryId  Int
+  subCateId   Int        @default(autoincrement()) @id
+  subCateName String
+  category    category   @relation(fields: [categoryId], references: [categoryId])
+  products    products[]
+
+  @@index([categoryId], name: "SubCategories_fk_idx")
+}
+
+model tokens {
+  accessToken  String
+  refreshToken String
+  tokenId      Int    @default(autoincrement()) @id
+  userId       Int
+  users        users  @relation(fields: [userId], references: [userId])
+
+  @@index([userId], name: "userId_fk_idx")
 }
 
 model users {
-  avatarUrl   String?
-  create_time DateTime?
-  email       String?
-  facebookId  String?
-  fullname    String?
-  id          Int       @default(autoincrement()) @id
-  password    String
-  username    String    @unique
+  email            String   @unique
+  firstname        String
+  lastname         String
+  password         String
+  registrationdate DateTime
+  userId           Int      @default(autoincrement()) @id
+  username         String   @unique
+  tokens           tokens[]
 }

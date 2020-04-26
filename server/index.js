@@ -1,21 +1,11 @@
 /* eslint consistent-return:0 import/order:0 */
 require('dotenv').config();
 const express = require('express');
+// const graphqlHTTP = require('express-graphql');
+const { ApolloServer } = require('apollo-server-express');
 const logger = require('./logger');
-const graphqlHTTP = require('express-graphql');
-const { buildSchema } = require('graphql');
 
 const passport = require('passport');
-
-const schema = buildSchema(`
-  type Query {
-    hello: String
-  }
-`);
-
-const root = {
-  hello: () => 'Worlddsads',
-};
 
 const argv = require('./argv');
 const port = require('./port');
@@ -38,6 +28,8 @@ const prettyHost = customHost || 'localhost';
 //   // session
 // } = require('./config/session');
 const apiRouter = require('./routes/api.route');
+const { schema, root } = require('./models/graphql');
+const prisma = require('./config/prisma');
 
 class App {
   constructor() {
@@ -66,14 +58,22 @@ class App {
     // appExpress.use(passport.initialize());
     // If you need a backend, e.g. an API, add your custom backend-specific middleware here
     // appExpress.use('/api', myApi);
-    appExpress.use(
-      '/graphql',
-      graphqlHTTP({
-        schema,
-        rootValue: root,
-        graphiql: true,
-      }),
-    );
+    // appExpress.use(
+    //   '/graphql',
+    //   graphqlHTTP({
+    //     schema,
+    //     rootValue: root,
+    //     graphiql: true,
+    //   }),
+    // );
+    const server = new ApolloServer({
+      typeDefs: schema,
+      resolvers: root,
+      context: {
+        prisma,
+      },
+    });
+    server.applyMiddleware({ app: appExpress, path: '/graphql' });
 
     appExpress.use('/api', apiRouter);
 

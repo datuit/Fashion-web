@@ -35,6 +35,25 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
     color: black;
     }
+    ${'' /* Override */}
+    .modal {
+    padding: 30px !important;
+  }
+  .modal .modal-dialog {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    margin: 0;
+  }
+  .modal .modal-content {
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+  }
+  .modal .modal-body {
+    overflow-y: auto;
+     overflow-x: hidden;
+  }
 `;
 
 export default GlobalStyle;

@@ -6,7 +6,7 @@ const Register = () => (
     <form>
       <div className="row">
         <div className="form-group col-12 col-md-6">
-          <label htmlFor="exampleInputEmail1">Email address</label>
+          <label htmlFor="exampleInputEmail1">Email address (*)</label>
           <input
             type="email"
             className="form-control"
@@ -18,7 +18,7 @@ const Register = () => (
           </small>
         </div>
         <div className="form-group col-12 col-md-6">
-          <label htmlFor="exampleInputPassword1">Password</label>
+          <label htmlFor="exampleInputPassword1">Password (*)</label>
           <input
             type="password"
             className="form-control"
@@ -26,7 +26,7 @@ const Register = () => (
           />
         </div>
         <div className="form-group col-12 col-md-6">
-          <label htmlFor="exampleInputPassword1">Confirm Password</label>
+          <label htmlFor="exampleInputPassword1">Confirm Password (*)</label>
           <input
             type="password"
             className="form-control"
@@ -34,7 +34,7 @@ const Register = () => (
           />
         </div>
         <div className="form-group col-12 col-md-6">
-          <label htmlFor="exampleInputPassword1">First Name</label>
+          <label htmlFor="exampleInputPassword1">First Name (*)</label>
           <input
             type="password"
             className="form-control"
@@ -42,15 +42,16 @@ const Register = () => (
           />
         </div>
         <div className="form-group col-12 col-md-6">
-          <label htmlFor="exampleInputPassword1">Last Name</label>
+          <label htmlFor="exampleInputPassword1">Last Name (*)</label>
           <input
             type="password"
             className="form-control"
             id="exampleInputPassword1"
           />
         </div>
+
         <div className="form-group col-12 col-md-6">
-          <label htmlFor="exampleInputPassword1">Company Name</label>
+          <label htmlFor="exampleInputPassword1">Company Name (Option)</label>
           <input
             type="password"
             className="form-control"

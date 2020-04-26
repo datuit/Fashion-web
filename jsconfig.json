@@ -5,6 +5,7 @@
     "paths": {
       "Components/*": ["./app/components/*"],
       "Containers/*": ["./app/containers/*"],
+      "Constants/*": ["./app/constants/*"],
       "Images/*": ["./app/images/*"],
       "Routes/*": ["./app/routes/*"],
       "Utils/*": ["./app/utils/*"],

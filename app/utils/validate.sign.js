@@ -1,34 +1,23 @@
-const Joi = require('joi');
+import * as Yup from 'yup';
 
-export const userWarn = 'Password must be between 3-20 characters';
-const passwordWarn = 'Password must be between 5-20 characters ';
+const username = Yup.string()
+  .required('Require')
+  .trim()
+  .min(5, 'Username must have min 5 characters')
+  .max(12, 'Username have max 12 characters')
+  .matches(/^[a-zA-Z0-9]+$/, 'Do not use special characters');
 
-export const username = Joi.string()
-  .regex(/^[a-zA-Z0-9]{3,20}$/)
-  .required()
-  .options({
-    language: {
-      string: {
-        regex: {
-          base: userWarn,
-        },
-      },
-    },
-  });
-export const password = Joi.string()
-  .regex(/^[a-zA-Z0-9!@#$%^&*.]{3,20}$/)
-  .required()
-  .options({
-    language: {
-      string: {
-        regex: {
-          base: passwordWarn,
-        },
-      },
-    },
-  });
+const password = Yup.string()
+  .required('Require')
+  .trim()
+  .min(5, 'Username must have min 5 characters')
+  .max(12, 'Username have max 10 characters')
+  .matches(
+    /^[a-zA-Z0-9!@#$%^&*.]+$/,
+    'Use only letters, numbers and characters "! @ # $% ^ & *."',
+  );
 
-export const sign = Joi.object().keys({
+export const signIn = Yup.object().shape({
   username,
   password,
 });

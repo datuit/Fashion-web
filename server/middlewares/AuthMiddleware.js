@@ -5,7 +5,10 @@ const accessTokenSecret =
   process.env.ACCESS_TOKEN_SECRET || 'ledat98998@gmail.com';
 
 const isAuth = async (req, res, next) => {
-  const tokenFromClient = req.headers['x-access-token'];
+  const tokenFromClient =
+    req.headers['x-access-token'] ||
+    (req.body && req.body.access_token) ||
+    (req.query && req.query.access_token);
   if (tokenFromClient) {
     try {
       const decode = await jwtHelper.verifyToken(

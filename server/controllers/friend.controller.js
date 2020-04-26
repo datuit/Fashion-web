@@ -3,6 +3,7 @@ const friendLists = (req, res) => {
   debug(
     `Xác thực token hợp lệ, thực hiện giả lập lấy danh sách bạn bè của user và trả về cho người dùng...`,
   );
+  console.log(req.body);
   // Lưu ý khi làm thực tế thì việc lấy danh sách này là query tới DB để lấy nhé. Ở đây mình chỉ mock thôi.
   const friends = [
     {

@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import { respondBelow, respondAbove } from 'Style/mixin.style';
 
 const HeaderWrapper = styled.header`
-  text-transform: uppercase;
   position: fixed;
   top: 0;
-  width: 100%;
   z-index: 1000;
+  width: 100%;
+  text-transform: uppercase;
   background: #fff;
   ${respondBelow(
     'sm',
@@ -21,7 +21,7 @@ const HeaderWrapper = styled.header`
     .top-nav-right li {
       margin-left: 10px;
 
-      a ion-icon {
+      .btn ion-icon {
         font-size: 25px;
       }
     }
@@ -39,17 +39,15 @@ const HeaderWrapper = styled.header`
       cursor: pointer;
 
       span {
-        display: inline-block;
         position: relative;
+        display: inline-block;
         width: 25px;
         height: 2px;
         background: black;
-        /* transform: rotate(0);
-        transition: transform 0.5s; */
         &::after {
           content: '';
-          bottom: 8px;
           position: absolute;
+          bottom: 8px;
           width: 25px;
           height: 2px;
           background: black;
@@ -57,8 +55,9 @@ const HeaderWrapper = styled.header`
 
         &::before {
           content: '';
-          top: 8px;
           position: absolute;
+          top: 8px;
+
           width: 25px;
           height: 2px;
           background: black;
@@ -97,10 +96,7 @@ const HeaderWrapper = styled.header`
   }
 
   .top-nav-logo {
-    text-align: center;
-
     .logo {
-      display: inline-block;
       height: 50px;
 
       img {
@@ -111,18 +107,15 @@ const HeaderWrapper = styled.header`
 
   .top-nav-right {
     font-size: 15px;
-    float: right;
-
     li {
-      &:first-child input {
+      margin-left: 15px;
+      input.search-desktop {
         width: 90px;
+
         outline: none;
         border: none;
         border-bottom: 1px solid black;
       }
-
-      margin-left: 15px;
-
       a {
         text-decoration: none;
         padding: 6px;
@@ -134,22 +127,25 @@ const HeaderWrapper = styled.header`
         > div {
           position: relative;
           span.card-count {
-            text-align: center;
             position: absolute;
             top: 0;
             left: 100%;
+
             min-width: 18px;
             height: 18px;
-            color: white;
+            border-radius: 100%;
+
+            text-align: center;
             font-size: 10px;
             line-height: 20px;
-            border-radius: 100%;
+
+            color: white;
             background-color: black;
           }
         }
         > span {
-          font-weight: bold;
           vertical-align: middle;
+          font-weight: bold;
         }
       }
     }
@@ -165,12 +161,12 @@ export const MenubarWrapper = styled.section`
         &:not(.active){
           max-height : 0 !important;
           overflow : hidden;
-          transition: max-height 500ms !important;
+          transition: max-height 500ms cubic-bezier(0, 1, 0, 1);
         }
         &.active{
           overflow : hidden;
           max-height: 1000px !important;
-          transition: max-height 500ms !important;
+          transition: max-height 500ms ;
         }
       `,
       )}
@@ -179,8 +175,8 @@ export const MenubarWrapper = styled.section`
       'md',
       `
       ul.navbar-nav {
-        text-align : center;
         margin: 0 auto;
+        text-align : center;
       }
 
     `,
@@ -203,16 +199,16 @@ export const MenubarWrapper = styled.section`
 
         ion-icon {
           position: absolute;
-          display: none;
           bottom: -10px;
           left: 50%;
+          display: none;
           transform: translateX(-50%);
         }
 
         .dropdown-menu {
-          border: none;
           top: 100%;
           z-index: -1;
+          border: none;
         }
 
         ${respondAbove(

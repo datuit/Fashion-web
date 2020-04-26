@@ -1,229 +1,128 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+import Nanobar from 'Utils/Nanobar';
+
+import {
+  Container,
+  Col,
+  Row,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
+  Button,
+} from 'reactstrap';
 import Breadcrumb from 'Components/Breadcrumb';
 import ProductItem from 'Components/ProductItem';
+import Spiner from 'Components/Spiner';
 import ProductWrapper from './product.style';
+import FilterSider from './FilterSider';
 
-const Product = () => {
+const productsQuery = gql`
+  {
+    products {
+      productId
+      productName
+      productNote
+      productPrice
+      productCost
+      productDecription
+      productSku
+      subCateId
+    }
+  }
+`;
+
+const Product = props => {
+  const { match } = props;
+  console.log(match);
+  const { loading, data } = useQuery(productsQuery);
+  if (loading) {
+    Nanobar.go(30);
+  } else Nanobar.go(100);
   return (
     <ProductWrapper>
-      <div className="container">
+      <Container>
         <Breadcrumb />
-        <div className="row">
-          <div className="col-12 col-md-3 filter-block">
-            <div className="d-none d-md-block">
-              <div className="h5">Refine by</div>
-
-              <span>No filters applied</span>
-            </div>
-            <div className="title-block-mobile d-block d-md-none">
-              <div className="h5 text-uppercase text-center">Refine</div>
-            </div>
-            <div className="filter-size show">
-              <div className="filter-size-action">
-                <div className="w-50 h5 d-inline-block">Size</div>
-                <div className="w-50 d-inline-block text-right ">
-                  <span className="icon-plus-efect">
-                    <ion-icon name="add-outline" />
-                  </span>
-                </div>
-              </div>
-              <div className="form-check">
-                <div className="row">
-                  <div className="col-6">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id="defaultCheck0"
-                    />
-                    <label className="form-check-label" htmlFor="defaultCheck1">
-                      XXS
-                    </label>
-                  </div>
-                  <div className="col-6">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      defaultValue
-                      id="defaultCheck1"
-                    />
-                    <label className="form-check-label" htmlFor="defaultCheck1">
-                      XS
-                    </label>
-                  </div>
-                  <div className="col-6">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      defaultValue
-                      id="defaultCheck1"
-                    />
-                    <label className="form-check-label" htmlFor="defaultCheck1">
-                      S
-                    </label>
-                  </div>
-                  <div className="col-6">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      defaultValue
-                      id="defaultCheck1"
-                    />
-                    <label className="form-check-label" htmlFor="defaultCheck1">
-                      M
-                    </label>
-                  </div>
-                  <div className="col-6">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      defaultValue
-                      id="defaultCheck1"
-                    />
-                    <label className="form-check-label" htmlFor="defaultCheck1">
-                      L
-                    </label>
-                  </div>
-                  <div className="col-6">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      defaultValue
-                      id="defaultCheck1"
-                    />
-                    <label className="form-check-label" htmlFor="defaultCheck1">
-                      XL
-                    </label>
-                  </div>
-                  <div className="col-6">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      defaultValue
-                      id="defaultCheck1"
-                    />
-                    <label className="form-check-label" htmlFor="defaultCheck1">
-                      2XL
-                    </label>
-                  </div>
-                  <div className="col-6">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      defaultValue
-                      id="defaultCheck1"
-                    />
-                    <label className="form-check-label" htmlFor="defaultCheck1">
-                      3XL
-                    </label>
-                  </div>
-                  <div className="col-6">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      defaultValue
-                      id="defaultCheck1"
-                    />
-                    <label className="form-check-label" htmlFor="defaultCheck1">
-                      4XL
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="filter-price show">
-              <div className="filter-price-action">
-                <div className="w-50 h5 d-inline-block">Price</div>
-                <div className="w-50 d-inline-block text-right ">
-                  <span className="icon-plus-efect">
-                    <ion-icon name="add-outline" />
-                  </span>
-                </div>
-              </div>
-              <div className="form-check">
-                <div className="row">
-                  <div className="col">
-                    <input
-                      className="form-control"
-                      type="number"
-                      id="example-number-input"
-                      placeholder="Min"
-                    />
-                  </div>
-                  <div className="col">
-                    <input
-                      className="form-control"
-                      type="number"
-                      id="example-number-input"
-                      placeholder="Max"
-                    />
-                  </div>
-                  <div className="col">
-                    <button className="btn btn-outline-secondary">
-                      Update
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 col-md-9">
+        <Row>
+          <Col xs="12" md="3">
+            <FilterSider />
+          </Col>
+          <Col xs="12" md="9">
             <div>
-              <div className=" row justify-content-end mb-4">
-                <div className="col-6 col-md-3">
-                  <button className="btn btn-outline-secondary btn-lg btn-block">
+              <Row className="justify-content-end mb-4">
+                <Col xs="6" md="3">
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary btn-lg btn-block"
+                  >
                     Model View
                   </button>
-                </div>
-                <div className="col-6 col-md-3">
-                  <button className="btn btn-outline-secondary btn-lg btn-block">
+                </Col>
+                <Col xs="6" md="3">
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary btn-lg btn-block"
+                  >
                     Product View
                   </button>
-                </div>
-              </div>
-              <div className="row">
-                {new Array(10).fill('').map((value, i) => {
-                  return <ProductItem colXsMd={6} colMdXl={4} />;
-                })}
-                <div className="col-12 ">
-                  <nav aria-label="Page navigation example text-center">
-                    <ul className="pagination d-flex justify-content-center">
-                      <li className="page-item">
-                        <a className="page-link" href="#" aria-label="Previous">
-                          <span aria-hidden="true">«</span>
-                          <span className="sr-only">Previous</span>
-                        </a>
-                      </li>
-                      <li className="page-item">
-                        <a className="page-link" href="#">
-                          1
-                        </a>
-                      </li>
-                      <li className="page-item">
-                        <a className="page-link" href="#">
-                          2
-                        </a>
-                      </li>
-                      <li className="page-item">
-                        <a className="page-link" href="#">
-                          3
-                        </a>
-                      </li>
-                      <li className="page-item">
-                        <a className="page-link" href="#" aria-label="Next">
-                          <span aria-hidden="true">»</span>
-                          <span className="sr-only">Next</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
-              </div>
+                </Col>
+              </Row>
+              <Row>
+                <Row>
+                  {loading ? (
+                    <Spiner />
+                  ) : (
+                    data.products.map(product => (
+                      <Col xs="6" md="4" key={product.productId}>
+                        <ProductItem product={product} />
+                      </Col>
+                    ))
+                  )}
+                </Row>
+                <Col xs="12">
+                  <Pagination className="d-flex justify-content-center">
+                    <PaginationItem>
+                      <PaginationLink first href="#" />
+                    </PaginationItem>
+                    <PaginationItem>
+                      <PaginationLink previous href="#" />
+                    </PaginationItem>
+                    <PaginationItem>
+                      <PaginationLink href="#">1</PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem>
+                      <PaginationLink href="#">2</PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem>
+                      <PaginationLink href="#">3</PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem>
+                      <PaginationLink href="#">4</PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem>
+                      <PaginationLink href="#">5</PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem>
+                      <PaginationLink next href="#" />
+                    </PaginationItem>
+                    <PaginationItem>
+                      <PaginationLink last href="#" />
+                    </PaginationItem>
+                  </Pagination>
+                </Col>
+              </Row>
             </div>
-          </div>
-        </div>
-      </div>
+          </Col>
+        </Row>
+      </Container>
     </ProductWrapper>
   );
+};
+
+Product.propTypes = {
+  match: PropTypes.object,
 };
 
 export default Product;

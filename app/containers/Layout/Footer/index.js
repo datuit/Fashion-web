@@ -1,4 +1,5 @@
 import React from 'react';
+import ImgLoadding from 'Components/ImgLoading';
 import FooterWrapper from './Footer.style';
 function Footer() {
   return (
@@ -6,7 +7,7 @@ function Footer() {
       <div className="container-fluid">
         <div className="row">
           <div className="col-12 col-md-3 text-center text-md-right">
-            <img
+            <ImgLoadding
               src="https://cdn11.bigcommerce.com/s-9srn18to/content/img/logo-black-inverted2.png"
               alt=""
             />
@@ -100,7 +101,7 @@ function Footer() {
                 <h5>SECURE PAYMENTS WITH</h5>
               </li>
               <li className="payment-network">
-                <img
+                <ImgLoadding
                   src="https://cdn11.bigcommerce.com/s-9srn18to/content/img/payment_icons-5.png"
                   alt=""
                 />

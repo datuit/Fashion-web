@@ -6,6 +6,7 @@ const HomeWrapper = styled.div`
   .carousel {
     img {
       width: 100vw;
+
       background-size: contain;
       object-fit: fill;
     }
@@ -14,21 +15,24 @@ const HomeWrapper = styled.div`
     margin: 20px 0;
 
     .item {
-      display: block;
       position: relative;
-      color: white;
-      margin: 20px 0;
 
+      display: block;
+      margin: 20px 0;
+      color: white;
       .content {
-        text-transform: uppercase;
-        font-size: 25px;
-        color: white;
-        letter-spacing: 10px;
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+
         opacity: 0;
+        color: white;
+
+        text-transform: uppercase;
+        font-size: 25px;
+        letter-spacing: 10px;
+
+        transform: translate(-50%, -50%);
       }
 
       img {
@@ -37,12 +41,15 @@ const HomeWrapper = styled.div`
 
       &::before {
         content: '';
+
         position: absolute;
         top: 0;
         left: 0;
+
         width: 100%;
         height: 100%;
         opacity: 0;
+
         background-color: rgba(0, 0, 0, 0.3);
       }
 
@@ -57,22 +64,22 @@ const HomeWrapper = styled.div`
   }
 
   .newletter {
-    background-color: #e7a8a8;
     padding: 30px;
     font-size: 14px;
 
+    background-color: #e7a8a8;
     span {
       text-transform: uppercase;
-      letter-spacing: 5px;
       font-size: 20px;
+      letter-spacing: 5px;
       line-height: 55px;
     }
 
     input {
       &[type='email'] {
-        outline: none;
         width: 100%;
         padding: 15px;
+        outline: none;
       }
 
       &[type='submit'] {

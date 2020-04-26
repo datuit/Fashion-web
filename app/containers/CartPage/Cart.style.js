@@ -3,7 +3,6 @@ import styled from 'styled-components';
 const CartWrapper = styled.div`
   ul {
     list-style: none;
-    list-style-type: none;
     li {
       display: block;
       padding: 20px 0;
@@ -18,8 +17,9 @@ export const TableWrapper = styled.table`
   }
   span.delete {
     display: inline-block;
-    font-size: 20px;
     padding-top: 5px;
+
+    font-size: 20px;
     cursor: pointer;
     &:hover {
       transform: scale(1.1);

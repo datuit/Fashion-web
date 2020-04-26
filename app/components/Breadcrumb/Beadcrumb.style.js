@@ -2,8 +2,9 @@ import styled from 'styled-components';
 
 const BreadcrumbWrapper = styled.nav`
   .breadcrumb {
-    background-color: transparent;
     font-size: 14px;
+
+    background-color: transparent;
     &-item {
       a {
         color: #757575 !important;
@@ -11,8 +12,9 @@ const BreadcrumbWrapper = styled.nav`
     }
   }
   h1 {
-    color: #444444;
     margin: 14px 0 42px;
+
+    color: #444444;
   }
 `;
 

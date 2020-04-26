@@ -1,17 +1,31 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import classnames from 'classnames';
+
 import logo from 'Images/alogo.png';
+import ImgLoadding from 'Components/ImgLoading';
 import Menubar from './Menubar';
 import HeaderWrapper from './styles';
 
-function Header() {
+function Header(props) {
+  const { isLogin, user } = props;
+
   const [isTogleSider, setIsTogleSider] = useState(false);
   const [isTogleFormSearch, setIsTogleFormSearch] = useState(false);
   const onTogleSider = () => setIsTogleSider(!isTogleSider);
   const onTogleFormSearch = () => setIsTogleFormSearch(!isTogleFormSearch);
+  const tagAs = document.querySelectorAll('#header a');
+  tagAs.forEach(a =>
+    a.addEventListener('click', () => {
+      if (isTogleSider) {
+        onTogleSider();
+      }
+    }),
+  );
   return (
-    <HeaderWrapper>
+    <HeaderWrapper id="header">
       <section>
         <div className="container-fluid">
           <div className="top-nav position-relative">
@@ -26,42 +40,60 @@ function Header() {
                     { active: isTogleSider },
                   )}
                 >
-                  <div className="d-inline-block" onClick={onTogleSider}>
+                  <div
+                    role="button"
+                    aria-hidden
+                    className="d-inline-block"
+                    onClick={onTogleSider}
+                  >
                     <span> </span>
                   </div>
                 </div>
               </div>
               <div className="col-4">
-                <div className="top-nav-logo">
-                  <Link to="/" className="logo">
-                    <img src={logo} alt="2" />
+                <div className="top-nav-logo text-center">
+                  <Link to="/" className="logo d-inline-block">
+                    <ImgLoadding src={logo} alt="2" />
                   </Link>
                 </div>
               </div>
               <div className="col-4">
-                <div className="top-nav-right">
+                <div className="top-nav-right float-right">
                   <ul className="none">
                     <li className="d-none d-md-inline-block">
                       <form>
                         <label className="h4" htmlFor="forSearchDesktop">
                           <ion-icon name="search-outline" />
                         </label>
-                        <input id="forSearchDesktop" type="text" />
+                        <input
+                          className="search-desktop"
+                          id="forSearchDesktop"
+                          type="text"
+                        />
                       </form>
                     </li>
                     <li className="d-inline-block d-md-none">
                       <form>
-                        <a href="#" onClick={onTogleFormSearch}>
+                        <div
+                          className="btn"
+                          aria-hidden
+                          role="button"
+                          onClick={onTogleFormSearch}
+                        >
                           <ion-icon name="search-outline" />
-                        </a>
+                        </div>
                         <input className="d-none d-md-inline" type="text" />
                       </form>
                     </li>
-                    <li>
-                      <Link to="/login" className="d-none d-md-inline-block">
-                        <ion-icon name="person-circle-outline" />
-                        <span>Sign In</span>
-                      </Link>
+                    <li className="d-none d-md-inline-block">
+                      {isLogin ? (
+                        `Hi, ${user.lastname}`
+                      ) : (
+                        <Link to="/login">
+                          <ion-icon name="person-circle-outline" />
+                          <span>Sign In</span>
+                        </Link>
+                      )}
                     </li>
                     <li>
                       <Link to="/cart">
@@ -99,9 +131,23 @@ function Header() {
           </div>
         </div>
       </section>
-      <Menubar isTogleSider={isTogleSider} />
+      <Menubar isTogleSider={isTogleSider} {...props} />
     </HeaderWrapper>
   );
 }
 
-export default Header;
+Header.propTypes = {
+  isLogin: PropTypes.bool,
+  user: PropTypes.object,
+};
+
+const mapStateToProps = ({ authUser }) => {
+  const { user } = authUser;
+  const isLogin = Boolean(user.userId);
+  return { user, isLogin };
+};
+
+export default connect(
+  mapStateToProps,
+  {},
+)(Header);
