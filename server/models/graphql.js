@@ -4,35 +4,37 @@ const {
   getProductList,
   findProduct,
   findCategory,
-  findSubCategory,
+  findProductImages,
+  findProductOfCategory,
 } = require('./products.model');
 
 const schema = gql`
   type Query {
     hello: String
     products: [Product]
-    product(productId: Int!): Product
+    product(productId: Int!, categoryName: String!): Product
+    productsCategory(categoryName: String!): [Product]
   }
   type Product {
     productId: Int
     productName: String
+    productImages: [Image]
     productNote: String
     productPrice: Float
     productCost: Float
     productSku: String
     productDecription: String
-    subCateId: Int
-    subCategory: SubCategory
-  }
-  type SubCategory {
     categoryId: Int
-    subCateId: Int
-    subCateName: String
     category: Category
   }
   type Category {
     categoryId: Int
     categoryName: String
+  }
+  type Image {
+    imageId: Int
+    imageSrc: String
+    productId: Int
   }
 `;
 
@@ -40,11 +42,10 @@ const root = {
   Query: {
     products: getProductList,
     product: findProduct,
+    productsCategory: findProductOfCategory,
   },
   Product: {
-    subCategory: findSubCategory,
-  },
-  SubCategory: {
+    productImages: findProductImages,
     category: findCategory,
   },
 };

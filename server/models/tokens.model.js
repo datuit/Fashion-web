@@ -8,7 +8,7 @@ const createToken = async tokenData => {
       refreshToken,
       users: {
         connect: {
-          userId: userId,
+          userId,
         },
       },
     },

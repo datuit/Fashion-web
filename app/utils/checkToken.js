@@ -13,7 +13,7 @@ const checkToken = async () => {
       return initialState;
     } catch (error) {
       if (error.response.status === 401) {
-        let user = await refreshAccessToken();
+        const user = await refreshAccessToken();
         initialState.authUser = { user };
         return initialState;
       }

@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
+import routes from 'Utils/routes';
 import { MenubarWrapper } from './styles';
 
 const Menubar = props => {
@@ -16,171 +17,33 @@ const Menubar = props => {
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav">
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="/"
-                id="navbarDropdown"
-              >
-                whatsnew
-              </a>
-              <ion-icon name="caret-down-outline" />
-              <div className="dropdown-menu " aria-labelledby="navbarDropdown">
-                <a className="dropdown-item" href="/">
-                  Action
-                </a>
-                <a className="dropdown-item" href="/">
-                  Another action
-                </a>
-                <div className="dropdown-divider" />
-                <a className="dropdown-item" href="/">
-                  Something else here
-                </a>
-              </div>
-            </li>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="/"
-                id="navbarDropdown"
-              >
-                dresses
-              </a>
-              <ion-icon name="caret-down-outline" />
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a className="dropdown-item" href="/">
-                  Action
-                </a>
-                <a className="dropdown-item" href="/">
-                  Another action
-                </a>
-                <div className="dropdown-divider" />
-                <a className="dropdown-item" href="/">
-                  Something else here
-                </a>
-              </div>
-            </li>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="/"
-                id="navbarDropdown"
-              >
-                women
-              </a>
-              <ion-icon name="caret-down-outline" />
-
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a className="dropdown-item" href="/men">
-                  Action
-                </a>
-                <a className="dropdown-item" href="/men">
-                  Another action
-                </a>
-                <div className="dropdown-divider" />
-                <a className="dropdown-item" href="/men">
-                  Something else here
-                </a>
-              </div>
-            </li>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="/men"
-                id="navbarDropdown"
-              >
-                curve
-              </a>
-              <ion-icon name="caret-down-outline" />
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a className="dropdown-item" href="/men">
-                  Action
-                </a>
-                <a className="dropdown-item" href="/men">
-                  Another action
-                </a>
-                <div className="dropdown-divider" />
-                <a className="dropdown-item" href="/men">
-                  Something else here
-                </a>
-              </div>
-            </li>
-            <li className="nav-item dropdown">
-              <Link
-                className="nav-link dropdown-toggle"
-                to="/men"
-                id="navbarDropdown"
-              >
-                men
-              </Link>
-              <ion-icon name="caret-down-outline" />
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a className="dropdown-item" href="/men">
-                  Action
-                </a>
-                <a className="dropdown-item" href="/men">
-                  Another action
-                </a>
-                <div className="dropdown-divider" />
-                <a className="dropdown-item" href="/men">
-                  Something else here
-                </a>
-              </div>
-            </li>
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="/men">
-                kids
-              </a>
-              <ion-icon name="caret-down-outline" />
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a className="dropdown-item" href="/men">
-                  Action
-                </a>
-                <a className="dropdown-item" href="/men">
-                  Another action
-                </a>
-                <div className="dropdown-divider" />
-                <a className="dropdown-item" href="/men">
-                  Something else here
-                </a>
-              </div>
-            </li>
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="/men">
-                campaign
-              </a>
-              <ion-icon name="caret-down-outline" />
-              <div className="dropdown-menu">
-                <a className="dropdown-item" href="/men">
-                  Action
-                </a>
-                <a className="dropdown-item" href="/men">
-                  Another action
-                </a>
-                <div className="dropdown-divider" />
-                <a className="dropdown-item" href="/men">
-                  Something else here
-                </a>
-              </div>
-            </li>
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="/men">
-                sale
-              </a>
-              <ion-icon name="caret-down-outline" />
-              <div className="dropdown-menu">
-                <a className="dropdown-item" href="/men">
-                  Action
-                </a>
-                <a className="dropdown-item" href="/men">
-                  Another action
-                </a>
-                <div className="dropdown-divider" />
-                <a className="dropdown-item" href="/men">
-                  Something else here
-                </a>
-              </div>
-            </li>
+            {routes.map(route => (
+              <li className="nav-item dropdown" key={route.category}>
+                <Link
+                  className="nav-link dropdown-toggle"
+                  to="/men"
+                  id="navbarDropdown"
+                >
+                  {route.category}
+                </Link>
+                <ion-icon name="caret-down-outline" />
+                <div
+                  className="dropdown-menu "
+                  aria-labelledby="navbarDropdown"
+                >
+                  <Link className="dropdown-item" to={`/${route.category}`}>
+                    Action
+                  </Link>
+                  <Link className="dropdown-item" to={`/${route.category}`}>
+                    Another action
+                  </Link>
+                  <div className="dropdown-divider" />
+                  <Link className="dropdown-item" to={`/${route.category}`}>
+                    Something else here
+                  </Link>
+                </div>
+              </li>
+            ))}
             {isLogin ? (
               <li className="nav-item dropdown d-block d-md-none">
                 <div className="dropdown-menu">

@@ -6,7 +6,7 @@ const fistLastNameMess = 'Require to be from 3 to 20 characters';
 const emailMess = 'Please enter the correct email format';
 
 const username = Joi.string()
-  .regex(/^[a-zA-Z0-9]{3,20}$/)
+  .regex(/^[a-zA-Z0-9]{3,12}$/)
   .required()
   .options({
     language: {
@@ -33,7 +33,6 @@ const password = Joi.string()
 
 const firstname = Joi.string()
   .required()
-  .regex(/^[a-zA-Z0-9!@#$%^&*.]{1,20}$/)
   .options({
     language: {
       string: {
@@ -46,7 +45,6 @@ const firstname = Joi.string()
 
 const lastname = Joi.string()
   .required()
-  .regex(/^[a-zA-Z0-9!@#$%^&*.]{1,20}$/)
   .options({
     language: {
       string: {

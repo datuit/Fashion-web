@@ -1,6 +1,15 @@
-//token-type
+// token-type
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 export const REGISTER_USER = 'REGISTER_USER';
 export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
 export const LOGOUT_USER = 'LOGOUT_USER';
+// cart-type
+export const ADD_CART = 'ADD_CART';
+export const REMOVE_CART = 'REMOVE_CART';
+export const CHANGE_CART = 'CHANGE_CART';
+export const ADD_CART_SUCCESS = 'ADD_CART_SUCCESS';
+export const REMOVE_CART_SUCCESS = 'REMOVE_CART_SUCCESS';
+export const CHANGE_CART_SUCCESS = 'CHANGE_CART_SUCCESS';
+// export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
+// export const LOGOUT_USER = 'LOGOUT_USER';

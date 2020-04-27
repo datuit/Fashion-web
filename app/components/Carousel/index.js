@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   Carousel,
   CarouselItem,
   CarouselControl,
   CarouselIndicators,
-  CarouselCaption,
 } from 'reactstrap';
 import ImgLoading from 'Components/ImgLoading';
 import CarouselWrapper from './carousel.style';
@@ -31,18 +31,15 @@ const CarouselCpn = props => {
     setActiveIndex(newIndex);
   };
 
-  const slides = items.map(item => {
-    return (
-      <CarouselItem
-        onExiting={() => setAnimating(true)}
-        onExited={() => setAnimating(false)}
-        key={item.src}
-      >
-        <ImgLoading src={item.src} alt={item.altText} />
-        <CarouselCaption />
-      </CarouselItem>
-    );
-  });
+  const slides = items.map(item => (
+    <CarouselItem
+      onExiting={() => setAnimating(true)}
+      onExited={() => setAnimating(false)}
+      key={item.imageId}
+    >
+      <ImgLoading src={item.imageSrc} alt={item.altText} />
+    </CarouselItem>
+  ));
 
   return (
     <CarouselWrapper>
@@ -66,6 +63,10 @@ const CarouselCpn = props => {
       </Carousel>
     </CarouselWrapper>
   );
+};
+
+CarouselCpn.propTypes = {
+  items: PropTypes.array,
 };
 
 export default CarouselCpn;

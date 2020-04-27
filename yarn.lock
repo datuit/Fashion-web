@@ -3732,7 +3732,7 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
   integrity sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
 
-cors@^2.8.4:
+cors@^2.8.4, cors@^2.8.5:
   version "2.8.5"
   resolved "https://registry.yarnpkg.com/cors/-/cors-2.8.5.tgz#eac11da51592dd86b9f06f6e7ac293b3df875d29"
   integrity sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==
@@ -8045,6 +8045,11 @@ liftoff@^2.5.0:
     object.map "^1.0.0"
     rechoir "^0.6.2"
     resolve "^1.1.7"
+
+light-toast@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/light-toast/-/light-toast-0.2.3.tgz#32ebcb106e77f6378ba2c2ccdbd02b07e6da6196"
+  integrity sha512-0ee3tYgMp7CNjSrMqECl/gkOr7drFUAIvdYufR7RjFfPVBkzf1Yeih2pWxp76xj1CD+PMWYnAMrG7ZypN5MnTA==
 
 lint-staged@8.1.5:
   version "8.1.5"

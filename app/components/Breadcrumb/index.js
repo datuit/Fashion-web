@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import BreadcrumbWrapper from './Beadcrumb.style';
 
-const Breadcrumb = () => {
+const Breadcrumb = ({ title }) => {
   const pathnameArr = window.location.pathname.split('/');
   return (
     <BreadcrumbWrapper>
@@ -26,7 +26,13 @@ const Breadcrumb = () => {
           );
         })}
       </ol>
-      <h1 className="text-capitalize">{pathnameArr[pathnameArr.length - 1]}</h1>
+      {title ? (
+        <h1 className="text-capitalize">
+          {pathnameArr[pathnameArr.length - 1]}
+        </h1>
+      ) : (
+        ''
+      )}
     </BreadcrumbWrapper>
   );
 };

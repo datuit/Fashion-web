@@ -1,32 +1,59 @@
 const prisma = require('../config/prisma');
 
-const getProductList = async (parent, agrs, ctx) => {
-  const products = await ctx.prisma.products.findMany();
+const getProductList = async () => {
+  const products = await prisma.products.findMany();
   return products;
 };
 
-const findProduct = async (parent, { productId }, ctx) => {
-  const product = await ctx.prisma.products.findOne({
+const findProduct = async (parent, { productId, categoryName }) => {
+  const product = await prisma.category
+    .findOne({
+      where: {
+        categoryName,
+      },
+    })
+    .products({
+      where: {
+        productId,
+      },
+    });
+  return product[0];
+};
+
+const findProductImages = async parent => {
+  const product = await prisma.images.findMany({
     where: {
-      productId,
+      productId: parent.productId,
     },
   });
   return product;
 };
 
-const findSubCategory = async (parent, agrs, ctx) => {
-  const subCategory = await ctx.prisma.subCategory.findOne({
-    where: {
-      subCateId: parent.subCateId,
-    },
-  });
-  return subCategory;
+const findProductOfCategory = async (parent, { categoryName }) => {
+  const products = await prisma.category
+    .findOne({
+      where: {
+        categoryName,
+      },
+    })
+    .products();
+  return products;
 };
 
-const findCategory = async (parent, agrs, ctx) => {
-  const category = await ctx.prisma.category.findOne({
+// const findSubCategory = async (parent, agrs) => {
+//   const subCategory = await prisma.subCategory.findOne({
+//     where: {
+//       subCateId: parent.subCateId,
+//     },
+//   });
+//   return subCategory;
+// };
+
+const findCategory = async parent => {
+  const { categoryId } = parent;
+  const category = await prisma.category.findOne({
     where: {
-      categoryId: parent.categoryId,
+      categoryId,
     },
   });
   return category;
@@ -35,6 +62,7 @@ const findCategory = async (parent, agrs, ctx) => {
 module.exports = {
   getProductList,
   findProduct,
-  findSubCategory,
   findCategory,
+  findProductImages,
+  findProductOfCategory,
 };

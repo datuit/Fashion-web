@@ -15,13 +15,14 @@ import Footer from 'Containers/Layout/Footer';
 import HomePage from 'Containers/HomePage/Loadable';
 import NotFoundPage from 'Containers/NotFoundPage/Loadable';
 import { RegisterPage, LoginPage } from 'Containers/Sign/Loadable';
+import AccountPage from 'Containers/AccountPage/Loadable';
 import CartPage from 'Containers/CartPage/Loadable';
 import ProductPage from 'Containers/ProductPage/Loadable';
 import ItemPage from 'Containers/ItemPage/Loadable';
 
 import { ProtectedRouter, RouteWithRouteAuth } from 'Utils/authRoute';
 
-import routes from 'Constants/routesProduct';
+import routes from 'Utils/routes';
 
 import GlobalStyle from 'Style/global.style';
 import MainWrapper from './style';
@@ -37,17 +38,21 @@ function App() {
           <Route exact path="/" component={HomePage} />
 
           <Route path="/cart" component={CartPage} />
-          <Route path="/men" component={ProductPage} />
 
-          <Route path="/category/men" component={ProductPage} />
-
-          {/* {routes.map((route)=>{
-            return (
-              <Fragment>
-                <Route path={`/category/${route.category.trim()}`} {ItemPage}/>
-              </Fragment>
-            )
-          })} */}
+          {routes.map(route => (
+            <Route
+              key={route.category}
+              exact
+              path={`/${route.category}`}
+              component={ProductPage}
+            />
+          ))}
+          {routes.map(route => (
+            <Route
+              path={`/${route.category}/:productId`}
+              component={ItemPage}
+            />
+          ))}
 
           <RouteWithRouteAuth path="/login" component={LoginPage} />
           <RouteWithRouteAuth path="/register" component={RegisterPage} />
@@ -57,10 +62,7 @@ function App() {
             component={ItemPage}
           /> */}
 
-          <ProtectedRouter path="/Helo">
-            <h1>Hello</h1>
-          </ProtectedRouter>
-
+          <ProtectedRouter path="/account" component={AccountPage} />
           <Route component={NotFoundPage} />
         </Switch>
       </MainWrapper>

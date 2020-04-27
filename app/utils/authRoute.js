@@ -6,37 +6,33 @@ const mapStateToProps = ({ authUser: { user } }) => ({
   isLogin: Boolean(user.userId),
 });
 
-const Protected = props => {
-  return (
-    <Route
-      exact={props.exact}
-      path={props.path}
-      component={() =>
-        props.isLogin ? (
-          <Route exact={props.exact} path={props.path} {...props} />
-        ) : (
-          <Redirect to="/" />
-        )
-      }
-    />
-  );
-};
+const Protected = props => (
+  <Route
+    exact={props.exact}
+    path={props.path}
+    component={() =>
+      props.isLogin ? (
+        <Route exact={props.exact} path={props.path} {...props} />
+      ) : (
+        <Redirect to="/" />
+      )
+    }
+  />
+);
 
-const RouteAuth = props => {
-  return (
-    <Route
-      exact={props.exact}
-      path={props.path}
-      component={() =>
-        props.isLogin ? (
-          <Redirect to="/" />
-        ) : (
-          <Route exact={props.exact} path={props.path} {...props} />
-        )
-      }
-    />
-  );
-};
+const RouteAuth = props => (
+  <Route
+    exact={props.exact}
+    path={props.path}
+    component={() =>
+      props.isLogin ? (
+        <Redirect to="/" />
+      ) : (
+        <Route exact={props.exact} path={props.path} {...props} />
+      )
+    }
+  />
+);
 
 // export const RouteWithSubRoute = (props) =>{
 //   return

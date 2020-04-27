@@ -10,10 +10,11 @@ import Menubar from './Menubar';
 import HeaderWrapper from './styles';
 
 function Header(props) {
-  const { isLogin, user } = props;
+  const { isLogin, user, cartLength } = props;
 
   const [isTogleSider, setIsTogleSider] = useState(false);
   const [isTogleFormSearch, setIsTogleFormSearch] = useState(false);
+
   const onTogleSider = () => setIsTogleSider(!isTogleSider);
   const onTogleFormSearch = () => setIsTogleFormSearch(!isTogleFormSearch);
   const tagAs = document.querySelectorAll('#header a');
@@ -87,7 +88,7 @@ function Header(props) {
                     </li>
                     <li className="d-none d-md-inline-block">
                       {isLogin ? (
-                        `Hi, ${user.lastname}`
+                        <Link to="/account">Hi, {user.lastname}</Link>
                       ) : (
                         <Link to="/login">
                           <ion-icon name="person-circle-outline" />
@@ -99,7 +100,7 @@ function Header(props) {
                       <Link to="/cart">
                         <div className="d-inline-block mr-md-4">
                           <ion-icon name="cart-outline" />
-                          <span className="card-count">2</span>
+                          <span className="card-count">{cartLength}</span>
                         </div>
                         <span className="d-none d-md-inline">view card</span>
                       </Link>
@@ -141,10 +142,11 @@ Header.propTypes = {
   user: PropTypes.object,
 };
 
-const mapStateToProps = ({ authUser }) => {
+const mapStateToProps = ({ authUser, cart }) => {
   const { user } = authUser;
   const isLogin = Boolean(user.userId);
-  return { user, isLogin };
+  const cartLength = cart.length;
+  return { user, isLogin, cartLength };
 };
 
 export default connect(

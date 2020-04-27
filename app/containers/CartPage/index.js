@@ -1,15 +1,22 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import { Row, Col, Container } from 'reactstrap';
 import Breadcrumb from 'Components/Breadcrumb';
 import ImgLoading from 'Components/ImgLoading';
 
+import _ from 'lodash';
+
 import CartWrapper, { TableWrapper } from './Cart.style';
 
 const Cart = props => {
-  const { match } = props;
+  const { cart } = props;
+  const subtotal = _.sumBy(cart, o => o.productPrice * o.productQuantity);
+  const tax = parseFloat((subtotal * 3) / 100);
   return (
     <Container>
-      <Breadcrumb match={match} />
+      <Breadcrumb title />
       <CartWrapper>
         <TableWrapper className="table ">
           <thead>
@@ -21,42 +28,50 @@ const Cart = props => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">
-                <Row>
-                  <Col xs="auto">
-                    <ImgLoading
-                      src="https://cdn11.bigcommerce.com/s-9srn18to/images/stencil/800x800/products/1820/20401/Billow-Sleeve-Knit-Dress-in-Black__80700.1586241081.jpg?c=2"
-                      alt=""
-                      className="mr-3"
-                      style={{
-                        width: '80px',
-                        height: '100px',
-                      }}
-                    />
-                  </Col>
-                  <Col className="p-5">
-                    <a href="/">Billow Sleeve Knit Dress in Black</a>
-                  </Col>
-                </Row>
-              </th>
-              <td className="col-item">Mark</td>
-              <td className="col-item">
-                <button className="btn btn-light">
-                  <ion-icon name="caret-down-outline" />
-                </button>
-                <span className="m-3">0</span>
-                <button className="btn btn-light">
-                  <ion-icon name="caret-up-outline" />
-                </button>
-              </td>
-              <td className="col-item h5 align-middle">
-                <span className="mr-2 align-middle">$ {0}</span>
-                <span className="align-middle delete">
-                  <ion-icon name="close-circle-outline" />
-                </span>
-              </td>
-            </tr>
+            {cart.map(item => (
+              <tr key={item.productId}>
+                <th scope="row">
+                  <Row>
+                    <Col xs="auto">
+                      <ImgLoading
+                        src={item.productImage}
+                        alt=""
+                        className="mr-3"
+                        style={{
+                          width: '80px',
+                          height: '100px',
+                        }}
+                      />
+                    </Col>
+                    <Col className="p-5">
+                      <Link
+                        to={`/${item.category.categoryName}/${item.productId}`}
+                      >
+                        {item.productName}
+                      </Link>
+                    </Col>
+                  </Row>
+                </th>
+                <td className="col-item">{item.productPrice}</td>
+                <td className="col-item">
+                  <button type="button" className="btn btn-light">
+                    <ion-icon name="caret-down-outline" />
+                  </button>
+                  <span className="m-3">{item.productQuantity}</span>
+                  <butto type="button" className="btn btn-light">
+                    <ion-icon name="caret-up-outline" />
+                  </butto>
+                </td>
+                <td className="col-item h5 align-middle text-right">
+                  <span className="mr-2 align-middle ">
+                    $ {(item.productQuantity * item.productPrice).toFixed(2)}
+                  </span>
+                  <span className="align-middle delete">
+                    <ion-icon name="close-circle-outline" />
+                  </span>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </TableWrapper>
         <div className="row">
@@ -64,7 +79,9 @@ const Cart = props => {
             <ul className="w-100 h-100 m-0 p-0">
               <li>
                 <div className="w-50 float-left h5">Subtotal:</div>
-                <div className="w-50 float-left h5 text-right">$ 379.90</div>
+                <div className="w-50 float-left h5 text-right">
+                  $ {subtotal}
+                </div>
               </li>
               <li>
                 <div className="w-50 float-left h5">Shipping:</div>
@@ -72,7 +89,9 @@ const Cart = props => {
               </li>
               <li>
                 <div className="w-50 float-left h5">Tax:</div>
-                <div className="w-50 float-left h5 text-right">$ 34.54</div>
+                <div className="w-50 float-left h5 text-right">
+                  $ {tax} (3%)
+                </div>
               </li>
 
               <li>
@@ -87,13 +106,15 @@ const Cart = props => {
               </li>
               <li>
                 <div className="w-50 float-left h5">Grand total:</div>
-                <div className="w-50 float-left h4 text-right">$ 379.90</div>
+                <div className="w-50 float-left h4 text-right">
+                  $ {subtotal + tax}
+                </div>
               </li>
               <li>
                 <div className="text-center">
-                  <a className="btn btn-dark pr-5 pl-5 pt-3 pb-3" href="/">
+                  <Link to="/" className="btn btn-light pr-5 pl-5 pt-3 pb-3">
                     Check Out
-                  </a>
+                  </Link>
                 </div>
               </li>
             </ul>
@@ -104,4 +125,11 @@ const Cart = props => {
   );
 };
 
-export default Cart;
+const mapStateToProps = state => {
+  const { cart } = state;
+  return {
+    cart,
+  };
+};
+
+export default connect(mapStateToProps)(Cart);

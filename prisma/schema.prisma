@@ -8,34 +8,35 @@ datasource db {
 }
 
 model category {
-  categoryId   Int           @default(autoincrement()) @id
-  categoryName String
-  subCategory  subCategory[]
+  categoryId   Int        @default(autoincrement()) @id
+  categoryName String     @unique
+  products     products[]
 }
 
-model productImages {
-  imgProductId Int      @default(autoincrement()) @id
-  imgUrl       String
-  productId    Int
-  products     products @relation(fields: [productId], references: [productId])
+model images {
+  imageId   Int      @default(autoincrement()) @id
+  imageSrc  String
+  productId Int
+  products  products @relation(fields: [productId], references: [productId])
 
   @@index([productId], name: "productimg_fk_idx")
 }
 
 model products {
+  categoryId        Int?
   productCost       Float?
   productDecription String?
-  productId         Int             @default(autoincrement()) @id
+  productId         Int           @default(autoincrement()) @id
   productName       String
   productNote       String?
   productPrice      Float
   productSku        String?
-  subCateId         Int
-  subCategory       subCategory     @relation(fields: [subCateId], references: [subCateId])
-  productImages     productImages[]
+  productType       String?
+  category          category?     @relation(fields: [categoryId], references: [categoryId])
+  images            images[]
   productsize       productsize[]
 
-  @@index([subCateId], name: "subId_fk_idx")
+  @@index([categoryId], name: "catogoryId_fk_idx")
 }
 
 model productsize {
@@ -46,16 +47,6 @@ model productsize {
   products        products @relation(fields: [productId], references: [productId])
 
   @@index([productId], name: "productID_fk_idx")
-}
-
-model subCategory {
-  categoryId  Int
-  subCateId   Int        @default(autoincrement()) @id
-  subCateName String
-  category    category   @relation(fields: [categoryId], references: [categoryId])
-  products    products[]
-
-  @@index([categoryId], name: "SubCategories_fk_idx")
 }
 
 model tokens {

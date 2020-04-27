@@ -1,19 +1,44 @@
-import React from 'react';
-import { Button } from 'reactstrap';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+
+import { Button, Spinner } from 'reactstrap';
 import PropTypes from 'prop-types';
 import Radio from 'Components/Radio';
 import Tab from 'Components/Tab';
+import ImgLoadding from 'Components/ImgLoading';
+import { addCart } from 'Redux/actions';
 import ProductViewWrapper from './productviewdetail.style';
 
 const ProductViewDetail = props => {
+  const [productQuantity, setQuantity] = useState(1);
+  const { addCartAct, product, loading } = props;
+  console.log('props', props);
   const {
+    productId,
     productName,
     productNote,
+    productImages,
     productPrice,
     productSku,
     productCost,
     productDecription,
-  } = props.product;
+    category,
+  } = product;
+  const onAddCartAct = () => {
+    addCartAct({
+      productId,
+      productName,
+      productPrice,
+      productImage: productImages[0].imageSrc,
+      productQuantity,
+      category,
+    });
+  };
+  const onChangeQuantity = value => {
+    if (productQuantity + value >= 1) {
+      setQuantity(productQuantity + value);
+    }
+  };
   return (
     <ProductViewWrapper>
       <div className="h3 pt-4 pb-4">{productName}</div>
@@ -34,11 +59,19 @@ const ProductViewDetail = props => {
       <br />
       <div className="text-uppercase d-inline-block p-4">
         <h5>QUANTITY :</h5>
-        <button type="button" className="btn btn-light">
+        <button
+          onClick={() => onChangeQuantity(-1)}
+          type="button"
+          className="btn btn-light"
+        >
           <ion-icon name="caret-down-outline" />
         </button>
-        <span className="m-3">0</span>
-        <button type="button" className="btn btn-light">
+        <span className="m-3">{productQuantity}</span>
+        <button
+          onClick={() => onChangeQuantity(1)}
+          type="button"
+          className="btn btn-light"
+        >
           <ion-icon name="caret-up-outline" />
         </button>
       </div>
@@ -46,8 +79,13 @@ const ProductViewDetail = props => {
         <h5>SIZE :</h5>
         <Radio />
       </div>
-      <Button className="text-uppercase p-3" color="dark" block>
-        Add To Cart
+      <Button
+        onClick={onAddCartAct}
+        className="text-uppercase p-3"
+        color="dark"
+        block
+      >
+        {loading ? <Spinner /> : 'Add To Cart'}
       </Button>
       <div className="pt-5 pb-5">
         <div className="h5 text-danger">
@@ -59,13 +97,39 @@ const ProductViewDetail = props => {
           Need help with your sizing? Click here.
         </a>
       </div>
-      <Tab />
+      <Tab data={TabDefaultVar} />
     </ProductViewWrapper>
   );
 };
+
+const TabDefaultVar = [
+  {
+    name: 'Styling',
+    component: () => <h4>NONE</h4>,
+  },
+  {
+    name: 'Sizing',
+    component: () => (
+      <ImgLoadding
+        className="img-fluid"
+        src="http://cdn8.bigcommerce.com/s-9srn18to/product_images/uploaded_images/bt-ss18-m0111.jpg"
+        alt="0"
+      />
+    ),
+  },
+];
 
 ProductViewDetail.propTypes = {
   product: PropTypes.object,
 };
 
-export default ProductViewDetail;
+const mapStateToProps = state => {
+  return {};
+};
+
+export default connect(
+  mapStateToProps,
+  {
+    addCartAct: addCart,
+  },
+)(ProductViewDetail);

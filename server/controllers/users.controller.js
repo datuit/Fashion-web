@@ -43,6 +43,7 @@ const register = async (req, res) => {
       { username, password, firstname, lastname, email },
       sign,
     );
+
     const passwordHash = await bcrypt.hash(userData.password, 10);
     userData.password = passwordHash;
     userData.registrationdate = getDate();
@@ -66,9 +67,8 @@ const login = async (req, res) => {
       const token = await createTokenData(user);
 
       return res.status(200).json({ token, user });
-    } else {
-      return res.status(401).json({ msg: 'Password is incorrect' });
     }
+    return res.status(401).json({ msg: 'Password is incorrect' });
   } catch (error) {
     console.log(error);
   }
