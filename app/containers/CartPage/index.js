@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { Row, Col, Container } from 'reactstrap';
+import { Container } from 'reactstrap';
 import Breadcrumb from 'Components/Breadcrumb';
-import ImgLoading from 'Components/ImgLoading';
+import Modal from 'Components/Modal';
+import MultiStep from 'Components/MultiStep';
 
 import _ from 'lodash';
 
+import { changeCart, removeCart } from 'Redux/actions';
 import CartWrapper, { TableWrapper } from './Cart.style';
+import CartItem from './CartItem';
 
 const Cart = props => {
-  const { cart } = props;
+  const { cart, changCartAct, removeCartAct } = props;
+  const [isModal, setModal] = useState(false);
+  const onToggle = () => setModal(!isModal);
+
   const subtotal = _.sumBy(cart, o => o.productPrice * o.productQuantity);
   const tax = parseFloat((subtotal * 3) / 100);
   return (
@@ -28,49 +34,13 @@ const Cart = props => {
             </tr>
           </thead>
           <tbody>
-            {cart.map(item => (
-              <tr key={item.productId}>
-                <th scope="row">
-                  <Row>
-                    <Col xs="auto">
-                      <ImgLoading
-                        src={item.productImage}
-                        alt=""
-                        className="mr-3"
-                        style={{
-                          width: '80px',
-                          height: '100px',
-                        }}
-                      />
-                    </Col>
-                    <Col className="p-5">
-                      <Link
-                        to={`/${item.category.categoryName}/${item.productId}`}
-                      >
-                        {item.productName}
-                      </Link>
-                    </Col>
-                  </Row>
-                </th>
-                <td className="col-item">{item.productPrice}</td>
-                <td className="col-item">
-                  <button type="button" className="btn btn-light">
-                    <ion-icon name="caret-down-outline" />
-                  </button>
-                  <span className="m-3">{item.productQuantity}</span>
-                  <butto type="button" className="btn btn-light">
-                    <ion-icon name="caret-up-outline" />
-                  </butto>
-                </td>
-                <td className="col-item h5 align-middle text-right">
-                  <span className="mr-2 align-middle ">
-                    $ {(item.productQuantity * item.productPrice).toFixed(2)}
-                  </span>
-                  <span className="align-middle delete">
-                    <ion-icon name="close-circle-outline" />
-                  </span>
-                </td>
-              </tr>
+            {cart.map(product => (
+              <CartItem
+                key={product.productId}
+                product={product}
+                changCartAct={changCartAct}
+                removeCartAct={removeCartAct}
+              />
             ))}
           </tbody>
         </TableWrapper>
@@ -112,14 +82,21 @@ const Cart = props => {
               </li>
               <li>
                 <div className="text-center">
-                  <Link to="/" className="btn btn-light pr-5 pl-5 pt-3 pb-3">
+                  <button
+                    type="button"
+                    className="btn btn-light pr-5 pl-5 pt-3 pb-3"
+                    onClick={onToggle}
+                  >
                     Check Out
-                  </Link>
+                  </button>
                 </div>
               </li>
             </ul>
           </div>
         </div>
+        <Modal isModal={isModal} setModal={setModal} onToggle={onToggle}>
+          {isModal ? <MultiStep /> : ''}
+        </Modal>
       </CartWrapper>
     </Container>
   );
@@ -132,4 +109,10 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Cart);
+export default connect(
+  mapStateToProps,
+  {
+    changCartAct: changeCart,
+    removeCartAct: removeCart,
+  },
+)(Cart);

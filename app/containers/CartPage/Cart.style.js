@@ -15,16 +15,9 @@ export const TableWrapper = styled.table`
   td.col-item {
     vertical-align: middle;
   }
-  span.delete {
+  .delete {
     display: inline-block;
-    padding-top: 5px;
-
     font-size: 20px;
-    cursor: pointer;
-    &:hover {
-      transform: scale(1.1);
-      transition: transform 500ms;
-    }
   }
 `;
 

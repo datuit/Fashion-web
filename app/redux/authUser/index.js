@@ -1,6 +1,7 @@
 import {
   LOGIN_USER,
   LOGIN_USER_SUCCESS,
+  LOGOUT_USER_SUCCESS,
   REGISTER_USER,
   REGISTER_USER_SUCCESS,
 } from 'Constants/actionTypes';
@@ -25,6 +26,8 @@ export default (state = initialState, { type, payload }) => {
     case LOGIN_USER_SUCCESS:
     case REGISTER_USER_SUCCESS:
       return { user: payload, loading: false };
+    case LOGOUT_USER_SUCCESS:
+      return initialState;
     default:
       return state;
   }

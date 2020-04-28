@@ -34,10 +34,6 @@ const RouteAuth = props => (
   />
 );
 
-// export const RouteWithSubRoute = (props) =>{
-//   return
-// }
-
 export const RouteWithRouteAuth = withRouter(
   connect(mapStateToProps)(RouteAuth),
 );

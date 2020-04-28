@@ -1,22 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 
+import { Row, Col, Container } from 'reactstrap';
 import logo from 'Images/alogo.png';
 import ImgLoadding from 'Components/ImgLoading';
-import Menubar from './Menubar';
-import HeaderWrapper from './styles';
+
+import routes from 'Utils/routes';
+
+import HeaderWrapper, { LanguageWrapper, MenubarWrapper } from './styles';
 
 function Header(props) {
   const { isLogin, user, cartLength } = props;
 
   const [isTogleSider, setIsTogleSider] = useState(false);
   const [isTogleFormSearch, setIsTogleFormSearch] = useState(false);
+  const [isTogleBtnLanguage, setTogleBtnLanguage] = useState(false);
 
   const onTogleSider = () => setIsTogleSider(!isTogleSider);
   const onTogleFormSearch = () => setIsTogleFormSearch(!isTogleFormSearch);
+  const onTogleBtnLanguage = () => setTogleBtnLanguage(!isTogleBtnLanguage);
   const tagAs = document.querySelectorAll('#header a');
   tagAs.forEach(a =>
     a.addEventListener('click', () => {
@@ -28,10 +33,10 @@ function Header(props) {
   return (
     <HeaderWrapper id="header">
       <section>
-        <div className="container-fluid">
+        <Container fluid>
           <div className="top-nav position-relative">
-            <div className="row">
-              <div className="col-4">
+            <Row>
+              <Col xs="4">
                 <div className="top-nav-phone d-none d-md-block">
                   FREE SHIPPING ON ALL ORDERS OVER $300
                 </div>
@@ -50,15 +55,15 @@ function Header(props) {
                     <span> </span>
                   </div>
                 </div>
-              </div>
-              <div className="col-4">
+              </Col>
+              <Col xs="4">
                 <div className="top-nav-logo text-center">
                   <Link to="/" className="logo d-inline-block">
                     <ImgLoadding src={logo} alt="2" />
                   </Link>
                 </div>
-              </div>
-              <div className="col-4">
+              </Col>
+              <Col xs="4">
                 <div className="top-nav-right float-right">
                   <ul className="none">
                     <li className="d-none d-md-inline-block">
@@ -107,9 +112,10 @@ function Header(props) {
                     </li>
                   </ul>
                 </div>
-              </div>
-              <div
-                className={classnames('col-12 d-none d-md-none', {
+              </Col>
+              <Col
+                xs="12"
+                className={classnames('d-none d-md-none', {
                   'd-block': isTogleFormSearch,
                 })}
               >
@@ -127,12 +133,78 @@ function Header(props) {
                     Search
                   </button>
                 </form>
-              </div>
-            </div>
+              </Col>
+            </Row>
           </div>
-        </div>
+        </Container>
       </section>
-      <Menubar isTogleSider={isTogleSider} {...props} />
+      <MenubarWrapper>
+        <nav className="navbar navbar-expand-md navbar-light">
+          <div
+            className={classnames('navbar-collapse collapse show', {
+              active: isTogleSider,
+            })}
+            id="navbarSupportedContent"
+          >
+            <ul className="navbar-nav">
+              {routes.map(route => (
+                <li className="nav-item dropdown" key={route.category}>
+                  <Link
+                    className="nav-link dropdown-toggle"
+                    to="/men"
+                    id="navbarDropdown"
+                  >
+                    {route.category}
+                  </Link>
+                  <ion-icon name="caret-down-outline" />
+                  <div
+                    className="dropdown-menu "
+                    aria-labelledby="navbarDropdown"
+                  >
+                    <Link className="dropdown-item" to={`/${route.category}`}>
+                      Action
+                    </Link>
+                    <Link className="dropdown-item" to={`/${route.category}`}>
+                      Another action
+                    </Link>
+                    <div className="dropdown-divider" />
+                    <Link className="dropdown-item" to={`/${route.category}`}>
+                      Something else here
+                    </Link>
+                  </div>
+                </li>
+              ))}
+              {isLogin ? (
+                <li className="nav-item dropdown d-block d-md-none">
+                  <div className="dropdown-menu">
+                    <div className="dropdown-item">Hi</div>
+                  </div>
+                </li>
+              ) : (
+                <Fragment>
+                  <li className="nav-item dropdown d-block d-md-none">
+                    <Link className="nav-link dropdown-toggle h5" to="/login">
+                      Sign In
+                    </Link>
+                  </li>
+
+                  <li className="nav-item dropdown d-block d-md-none">
+                    <span className="nav-link dropdown-toggle">Or</span>
+                  </li>
+                  <li className="nav-item dropdown d-block d-md-none">
+                    <Link
+                      className="nav-link dropdown-toggle h5"
+                      to="/register"
+                    >
+                      Register
+                    </Link>
+                  </li>
+                </Fragment>
+              )}
+            </ul>
+          </div>
+        </nav>
+      </MenubarWrapper>
     </HeaderWrapper>
   );
 }

@@ -1,28 +1,59 @@
 import React from 'react';
-import { Container } from 'reactstrap';
+import { Link, Switch, Route, Redirect } from 'react-router-dom';
+import classnames from 'classnames';
+import { Container, Nav, NavItem, Row, Col } from 'reactstrap';
 import ImgLoadding from 'Components/ImgLoading';
 import Breadcrumb from 'Components/Breadcrumb';
-import TabCpn from 'Components/Tab';
+import Spiner from 'Components/Spiner';
 import AccountPageWrapper from './account.style';
-
-const AccountPage = () => {
+const AccountPage = props => {
+  const { match } = props;
+  const { url } = match;
   return (
     <Container>
       <AccountPageWrapper className="account-page">
         <Breadcrumb title />
-        <TabCpn data={TabDefaultVar} center />
+        <Nav tabs className="justify-content-center">
+          {RoutesDefaultVar.map(route => (
+            <NavItem key={route.path}>
+              <Link
+                to={`${url}/${route.path}`}
+                className={classnames('nav-link text-uppercase', {
+                  active: route.path === 'orders',
+                })}
+              >
+                {route.path}
+              </Link>
+            </NavItem>
+          ))}
+        </Nav>
+        <Switch>
+          <Route path={url} exact>
+            <Spiner />
+            <Redirect to={`${url}/${RoutesDefaultVar[0].path}`} />
+          </Route>
+          {RoutesDefaultVar.map(route => (
+            <Route path={`${url}/${route.path}`} key={route.path}>
+              <Row>
+                <Col sm="12">
+                  <route.component />
+                </Col>
+              </Row>
+            </Route>
+          ))}
+        </Switch>
       </AccountPageWrapper>
     </Container>
   );
 };
 
-const TabDefaultVar = [
+const RoutesDefaultVar = [
   {
-    name: 'Orders',
+    path: 'orders',
     component: () => <h4>NONE</h4>,
   },
   {
-    name: 'Messages',
+    path: 'messages',
     component: () => (
       <ImgLoadding
         className="img-fluid"
@@ -32,24 +63,24 @@ const TabDefaultVar = [
     ),
   },
   {
-    name: 'Addresses',
+    path: 'address',
     component: () => <h4>NONE</h4>,
   },
   {
-    name: 'Wish Lists',
+    path: 'wishlist',
     component: () => <h4>NONE</h4>,
   },
   {
-    name: 'Recently Viewed',
+    path: 'recentlyviewed',
     component: () => <h4>NONE</h4>,
   },
   {
-    name: 'Account Settings',
+    path: 'setting',
     component: () => <h4>NONE</h4>,
   },
   {
-    name: 'Sign Out',
-    component: () => <h4>NONE</h4>,
+    path: 'logout',
+    component: () => <Redirect to="/logout" />,
   },
 ];
 

@@ -111,8 +111,8 @@ Login.propTypes = {
 const FormikForm = withFormik({
   mapPropsToValues() {
     return {
-      username: '',
-      password: '',
+      username: 'ledat1233',
+      password: '123123',
     };
   },
   validationSchema: signIn,

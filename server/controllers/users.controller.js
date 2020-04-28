@@ -107,33 +107,6 @@ const refreshToken = async (req, res) => {
       });
     }
   }
-
-  // console.log(refreshTokenFromClient);
-
-  // console.log(refreshTokenDb);
-  // if (refreshTokenFromClient && tokenList[refreshToken]) {
-  //   try {
-  //     const decode = await verifyToken(
-  //       refreshTokenFromClient,
-  //       refreshTokenSecret,
-  //     );
-  //     const user = decode.data;
-  //     const accessToken = await generateToken(
-  //       user,
-  //       accessTokenSecret,
-  //       accessTokenLife,
-  //     );
-  //     return res.status(200).json({ accessToken });
-  //   } catch (error) {
-  //     res.status(403).json({
-  //       message: 'Invalid refresh token.',
-  //     });
-  //   }
-  // } else {
-  //   return res.status(403).send({
-  //     message: 'No token provided.',
-  //   });
-  // }
 };
 
 const checkToken = async (req, res) => {

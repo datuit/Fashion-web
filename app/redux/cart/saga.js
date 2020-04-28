@@ -27,32 +27,40 @@ function* addCartWithProduct({ payload }) {
   localStorage.setItem('cart', JSON.stringify(cart));
   yield put(addCartSuccess(cart));
 }
-
-const RegisterWithEmailPasswordAsync = async user =>
-  Axios('api/user/register', 'POST', user);
-
-function* RegisterWithUsernamePassword({ payload }) {
-  const { user, history } = payload;
-  try {
-    const response = yield call(RegisterWithEmailPasswordAsync, user);
-    const { data } = response;
-    yield put(registerUserSuccess(data.user));
-    Cookie.set('accessToken', data.token.accessToken);
-    Cookie.set('refreshToken', data.token.refreshToken);
-    history.push('/');
-  } catch (error) {
-    console.log('login error : ', error);
-  }
+function* changeCartWithProduct({ payload }) {
+  const product = payload;
+  const cart = JSON.parse(localStorage.getItem('cart'));
+  const productIndex = _.findIndex(cart, o => {
+    return o.productId === product.productId;
+  });
+  cart[productIndex] = product;
+  localStorage.setItem('cart', JSON.stringify(cart));
+  yield put(changeCartSuccess(cart));
 }
 
-export function* watchRegisterUser() {
-  yield takeEvery(REGISTER_USER, RegisterWithUsernamePassword);
+function* removeCartWithProduct({ payload }) {
+  const productId = payload;
+
+  const cart = JSON.parse(localStorage.getItem('cart'));
+  _.remove(cart, n => {
+    return n.productId === productId;
+  });
+  localStorage.setItem('cart', JSON.stringify(cart));
+  yield put(removeCartSuccess(cart));
+}
+
+export function* watchChangeCart() {
+  yield takeEvery(CHANGE_CART, changeCartWithProduct);
 }
 
 export function* watchAddCart() {
   yield takeEvery(ADD_CART, addCartWithProduct);
 }
 
+export function* watchRemoveCart() {
+  yield takeEvery(REMOVE_CART, removeCartWithProduct);
+}
+
 export default function* rootSaga() {
-  yield all([fork(watchAddCart)]);
+  yield all([fork(watchAddCart), fork(watchChangeCart), fork(watchRemoveCart)]);
 }

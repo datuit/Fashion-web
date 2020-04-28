@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import BreadcrumbWrapper from './Beadcrumb.style';
 
@@ -26,13 +27,14 @@ const Breadcrumb = ({ title }) => {
           );
         })}
       </ol>
-      {title ? (
+      {_.isBoolean(title) ? (
         <h1 className="text-capitalize">
           {pathnameArr[pathnameArr.length - 1]}
         </h1>
       ) : (
         ''
       )}
+      {_.isString(title) ? <h1 className="text-capitalize">{title}</h1> : ''}
     </BreadcrumbWrapper>
   );
 };

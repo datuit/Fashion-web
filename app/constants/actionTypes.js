@@ -4,6 +4,7 @@ export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 export const REGISTER_USER = 'REGISTER_USER';
 export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
 export const LOGOUT_USER = 'LOGOUT_USER';
+export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS';
 // cart-type
 export const ADD_CART = 'ADD_CART';
 export const REMOVE_CART = 'REMOVE_CART';

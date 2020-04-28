@@ -4,7 +4,11 @@ import Axios from 'Utils/axios';
 
 import { LOGIN_USER, LOGOUT_USER, REGISTER_USER } from 'Constants/actionTypes';
 
-import { loginUserSuccess, registerUserSuccess } from './action';
+import {
+  loginUserSuccess,
+  registerUserSuccess,
+  logoutUserSuccess,
+} from './action';
 
 const loginWithEmailPasswordAsync = async user =>
   Axios('api/user/login', 'POST', user);
@@ -40,6 +44,19 @@ function* RegisterWithUsernamePassword({ payload }) {
   }
 }
 
+function* LogoutUser({ payload }) {
+  const history = payload;
+  try {
+    Cookie.get('accessToken');
+    yield put(logoutUserSuccess());
+    Cookie.remove('accessToken');
+    Cookie.remove('refreshToken');
+    history.push('/');
+  } catch (error) {
+    console.log('login error : ', error);
+  }
+}
+
 export function* watchRegisterUser() {
   yield takeEvery(REGISTER_USER, RegisterWithUsernamePassword);
 }
@@ -48,6 +65,14 @@ export function* watchLoginUser() {
   yield takeEvery(LOGIN_USER, loginWithUsernamePassword);
 }
 
+export function* watchLogoutUser() {
+  yield takeEvery(LOGOUT_USER, LogoutUser);
+}
+
 export default function* rootSaga() {
-  yield all([fork(watchLoginUser), fork(watchRegisterUser)]);
+  yield all([
+    fork(watchLoginUser),
+    fork(watchRegisterUser),
+    fork(watchLogoutUser),
+  ]);
 }

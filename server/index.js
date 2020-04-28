@@ -5,8 +5,6 @@ const Cors = require('cors');
 const { ApolloServer } = require('apollo-server-express');
 const logger = require('./logger');
 
-const passport = require('passport');
-
 const argv = require('./argv');
 const port = require('./port');
 const setup = require('./middlewares/frontendMiddleware');
@@ -34,7 +32,6 @@ class App {
   applyMiddleware() {
     const { appExpress } = this;
     appExpress.use(Cors());
-    appExpress.use(passport.initialize());
     appExpress.use(express.json());
     appExpress.use(express.urlencoded({ extended: true }));
     const server = new ApolloServer({

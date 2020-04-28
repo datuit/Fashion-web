@@ -2,6 +2,7 @@ import {
   LOGIN_USER,
   LOGIN_USER_SUCCESS,
   LOGOUT_USER,
+  LOGOUT_USER_SUCCESS,
   REGISTER_USER,
   REGISTER_USER_SUCCESS,
 } from 'Constants/actionTypes';
@@ -28,4 +29,8 @@ export const registerUserSuccess = user => ({
 export const logoutUser = history => ({
   type: LOGOUT_USER,
   payload: { history },
+});
+
+export const logoutUserSuccess = () => ({
+  type: LOGOUT_USER_SUCCESS,
 });

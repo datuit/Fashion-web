@@ -231,4 +231,19 @@ export const MenubarWrapper = styled.section`
   }
 `;
 
+export const LanguageWrapper = styled.div`
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  .btn.btn-secondary {
+    padding: 0;
+    transition: padding 300ms;
+    &.active {
+      padding: 5px 30px;
+      transition: padding 300ms;
+    }
+  }
+`;
+
 export default HeaderWrapper;

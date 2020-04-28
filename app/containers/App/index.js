@@ -14,7 +14,7 @@ import Header from 'Containers/Layout/Header';
 import Footer from 'Containers/Layout/Footer';
 import HomePage from 'Containers/HomePage/Loadable';
 import NotFoundPage from 'Containers/NotFoundPage/Loadable';
-import { RegisterPage, LoginPage } from 'Containers/Sign/Loadable';
+import { RegisterPage, LoginPage, LogoutPage } from 'Containers/Sign/Loadable';
 import AccountPage from 'Containers/AccountPage/Loadable';
 import CartPage from 'Containers/CartPage/Loadable';
 import ProductPage from 'Containers/ProductPage/Loadable';
@@ -49,6 +49,7 @@ function App() {
           ))}
           {routes.map(route => (
             <Route
+              key={route.category}
               path={`/${route.category}/:productId`}
               component={ItemPage}
             />
@@ -56,11 +57,7 @@ function App() {
 
           <RouteWithRouteAuth path="/login" component={LoginPage} />
           <RouteWithRouteAuth path="/register" component={RegisterPage} />
-
-          {/* <RouteWithRouteAuth
-            path="/category/:categoryname/:subcategory/:productId"
-            component={ItemPage}
-          /> */}
+          <ProtectedRouter path="/logout" component={LogoutPage} />
 
           <ProtectedRouter path="/account" component={AccountPage} />
           <Route component={NotFoundPage} />

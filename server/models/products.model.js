@@ -40,15 +40,6 @@ const findProductOfCategory = async (parent, { categoryName }) => {
   return products;
 };
 
-// const findSubCategory = async (parent, agrs) => {
-//   const subCategory = await prisma.subCategory.findOne({
-//     where: {
-//       subCateId: parent.subCateId,
-//     },
-//   });
-//   return subCategory;
-// };
-
 const findCategory = async parent => {
   const { categoryId } = parent;
   const category = await prisma.category.findOne({
