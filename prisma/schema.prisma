@@ -61,7 +61,9 @@ model tokens {
 
 model users {
   email            String   @unique
+  facebookId       String?  @unique
   firstname        String
+  googleId         String?  @unique
   lastname         String
   password         String
   registrationdate DateTime

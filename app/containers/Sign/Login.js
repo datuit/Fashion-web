@@ -34,6 +34,11 @@ const Login = props => {
       <LoginWrapper>
         <div className="row">
           <div className="col-12 col-md-6">
+            <div className="text-center">
+              <a href="/auth/facebook" style={{ fontSize: '50px' }}>
+                <ion-icon name="logo-facebook" />
+              </a>
+            </div>
             <form onSubmit={onSubmit}>
               <div className="form-group">
                 <label htmlFor="exampleInputUserName">User Name</label>

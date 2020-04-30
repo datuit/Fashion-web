@@ -1,7 +1,6 @@
 /* eslint consistent-return:0 import/order:0 */
 require('dotenv').config();
 const express = require('express');
-const Cors = require('cors');
 const { ApolloServer } = require('apollo-server-express');
 const logger = require('./logger');
 
@@ -31,7 +30,6 @@ class App {
 
   applyMiddleware() {
     const { appExpress } = this;
-    appExpress.use(Cors());
     appExpress.use(express.json());
     appExpress.use(express.urlencoded({ extended: true }));
     const server = new ApolloServer({

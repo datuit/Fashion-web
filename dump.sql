@@ -28,7 +28,7 @@ CREATE TABLE `category` (
   PRIMARY KEY (`categoryId`),
   UNIQUE KEY `CategoryID_UNIQUE` (`categoryId`),
   UNIQUE KEY `categoryName_UNIQUE` (`categoryName`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -55,7 +55,7 @@ CREATE TABLE `images` (
   PRIMARY KEY (`imageId`),
   KEY `productimg_fk_idx` (`productId`),
   CONSTRAINT `productimg_fk` FOREIGN KEY (`productId`) REFERENCES `products` (`productId`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +89,7 @@ CREATE TABLE `products` (
   UNIQUE KEY `productId_UNIQUE` (`productId`),
   KEY `catogoryId_fk_idx` (`categoryId`),
   CONSTRAINT `catogoryId_fk` FOREIGN KEY (`categoryId`) REFERENCES `category` (`categoryId`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -117,7 +117,7 @@ CREATE TABLE `productsize` (
   PRIMARY KEY (`productSizeId`),
   KEY `productID_fk_idx` (`productId`),
   CONSTRAINT `productID_fk` FOREIGN KEY (`productId`) REFERENCES `products` (`productId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -145,7 +145,7 @@ CREATE TABLE `tokens` (
   UNIQUE KEY `tokenId_UNIQUE` (`tokenId`),
   KEY `userId_fk_idx` (`userId`),
   CONSTRAINT `userId_fk` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -177,7 +177,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `UserEmail_UNIQUE` (`email`),
   UNIQUE KEY `UserName_UNIQUE` (`username`),
   UNIQUE KEY `UserID_UNIQUE` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
