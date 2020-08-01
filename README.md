@@ -2,7 +2,7 @@
 
 ## 🛍️ ecommerce application with MERN
 
-## Basic Overview - [Live Demo](https://fashionx.ml/)
+## Basic Overview - [Live Demo](http://fashionz.cf/)
 
 ## Build/Run
 
