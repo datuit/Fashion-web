@@ -16,7 +16,7 @@
 - ReactJs, bootstrap
 - ExpressJs
 - Jwt
-- Mysql,Graphql,Prisma
+- Mysql, Graphql, ORMs Prisma
 
 ```javascript
 
